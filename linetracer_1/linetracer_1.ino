@@ -8,8 +8,7 @@ const int IR_L = A5;
 int IR_L_data;
 int IR_M_data;
 int IR_R_data;
-
-int Timer = millis();
+int cnt;
 
 
 void setup() {
@@ -38,45 +37,51 @@ void loop() {
   
   
   // 아래 라인 트레이서 코드가 있어요. (0이 흰색, 1이 검은색)
-  if (Timer >= 0) {
+  // 자동차가 가야할 방향을 "  " 안에 적어주세요 (직진/정지/좌회전/우회전)
   if (IR_L_data == 0 and IR_M_data == 1 and IR_R_data == 0) {
-    Serial.println("직진");
+    //Serial.println("직진");
     forward();
     delay(100);
-  }
-}
-  else if (IR_L_data == 1 and IR_M_data == 1 and IR_R_data == 0) {
-    Serial.println("좌로 후진");
-    left();
-    delay(100);
-  }
-  else if (IR_L_data == 1 and IR_M_data == 0 and IR_R_data == 0) {
-    Serial.println("좌회전");
-    left();
-    delay(100);
-  }
-  else if (IR_L_data == 0 and IR_M_data == 1 and IR_R_data == 1) {
-    Serial.println("우로 후진");
-    right();
-    delay(100);
+    stop();
+    cnt = 0;
   }
   else if (IR_L_data == 0 and IR_M_data == 0 and IR_R_data == 1) {
-    Serial.println("우회전");
+    //Serial.println("우회전");
     right();
     delay(100);
-  }
-  else if (IR_L_data == 1 and IR_R_data == 1) {
-    Serial.println("정지");
     stop();
-    delay(100);
+    cnt = 0;
   }
-  else if(Timer <= 9000){
-    Timer = 0;
-    stop();
+  else if (IR_L_data == 0 and IR_M_data == 1 and IR_R_data == 1) {
+    //Serial.println("우회전");
+    right();
     delay(100);
+    stop();
+    cnt = 0;
+  }
+  else if (IR_L_data == 1 and IR_M_data == 0 and IR_R_data == 0) {
+    //Serial.println("좌회전");
+    left();
+    delay(100);
+    stop();
+    cnt = 0;
+  }
+  else if (IR_L_data == 1 and IR_M_data == 1 and IR_R_data == 0) {
+    //Serial.println("좌회전");
+    left();
+    delay(100);
+    stop();
+    cnt = 0;
+  }
+  else if (IR_L_data == 0 and IR_M_data == 0 and IR_R_data == 0) {
+    //Serial.println("정지");
+    cnt++;
+    delay(100);
+    if(cnt>50){
+      backward();
+    }
   }
 }
-
 
 void right () {
   //우
