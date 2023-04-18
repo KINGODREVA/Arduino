@@ -39,6 +39,7 @@ void loop() {
 }
 */
 
+/*
 // (bit연산) 버튼으로 LED 제어하기
 
 const int btn_pin = 2;
@@ -60,6 +61,27 @@ void loop() {
   } else{
     PORTD = B00000100;
     //PORTD = -_BV(led_pin) & PORTD;
+  }
+}
+*/
+
+
+// (bit연산) 버튼으로 LED 제어하기2_(while문)
+int main(void)
+{
+  DDRD = 0b10000000;
+  PORTD = 0b00010000;
+  
+  while(1)
+  {
+    if((PIND & 0b00010000) == 0) // 4번 핀이 LOW일 때 (버튼이 눌렸을 때)
+    {
+      PORTD &= ~0b10000000; // LED 끄기
+    }
+    else // 4번 핀이 HIGH일 때 (버튼이 눌리지 않았을 때)
+    {
+      PORTD |= 0b10000000; // LED 켜기
+    }
   }
 }
 
