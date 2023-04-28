@@ -28,7 +28,8 @@ void loop() {
   duration = pulseIn(ECHO, HIGH);
 
   // 시간 -> 거리(cm)로 환산
-  distance = ((float)(duration * 340) / 10000) / 2;
+  // distance = ((float)(duration * 340) / 10000) / 2;
+  distance = duration * 0.034 / 2;
 
   // 시리얼 모니터에 거리 출력
   Serial.print("Distance: ");
@@ -36,7 +37,7 @@ void loop() {
   Serial.println(" cm");
 
   if(distance <= 30)
-  {
+  { 
     digitalWrite(led_1, HIGH);
     digitalWrite(led_2, HIGH);
     digitalWrite(led_3, HIGH);
@@ -48,4 +49,7 @@ void loop() {
     digitalWrite(led_3, LOW);
   } 
 }
+
+
+
 
